@@ -69,62 +69,68 @@ function RedQueenRace() {
 
 const redQueen_alice_sprite = useWebAnimations({
     keyframes: spriteFrames,
+    timing: {
+        easing: "steps(7, end)",
+        direction: "reverse",
+        duration: 600,
+        playbackRate: 1,
+        iterations: Infinity,}
 
 })
 
-  const redQueen_alice = redQueen_alice_sprite.animate(spriteFrames, {
-    easing: "steps(7, end)",
-    direction: "reverse",
-    duration: 600,
-    playbackRate: 1,
-    iterations: Infinity,
-  });
+//   const redQueen_alice = redQueen_alice_sprite.animate(spriteFrames, {
+//     easing: "steps(7, end)",
+//     direction: "reverse",
+//     duration: 600,
+//     playbackRate: 1,
+//     iterations: Infinity,
+//   });
 
-  /* Alice tires so easily! 
-    Every so many seconds, reduce their playback rate so they slow a little. 
-  */
-  const sceneries = [
-    foreground1Movement,
-    foreground2Movement,
-    background1Movement,
-    background2Movement,
-  ];
+//   /* Alice tires so easily! 
+//     Every so many seconds, reduce their playback rate so they slow a little. 
+//   */
+//   const sceneries = [
+//     foreground1Movement,
+//     foreground2Movement,
+//     background1Movement,
+//     background2Movement,
+//   ];
 
-  const adjustBackgroundPlayback = function () {
-    if (redQueen_alice.playbackRate < 0.8) {
-      sceneries.forEach(function (anim) {
-        anim.playbackRate = (redQueen_alice.playbackRate / 2) * -1;
-      });
-    } else if (redQueen_alice.playbackRate > 1.2) {
-      sceneries.forEach(function (anim) {
-        anim.playbackRate = redQueen_alice.playbackRate / 2;
-      });
-    } else {
-      sceneries.forEach(function (anim) {
-        anim.playbackRate = 0;
-      });
-    }
-  };
-  adjustBackgroundPlayback();
+//   const adjustBackgroundPlayback = function () {
+//     if (redQueen_alice.playbackRate < 0.8) {
+//       sceneries.forEach(function (anim) {
+//         anim.playbackRate = (redQueen_alice.playbackRate / 2) * -1;
+//       });
+//     } else if (redQueen_alice.playbackRate > 1.2) {
+//       sceneries.forEach(function (anim) {
+//         anim.playbackRate = redQueen_alice.playbackRate / 2;
+//       });
+//     } else {
+//       sceneries.forEach(function (anim) {
+//         anim.playbackRate = 0;
+//       });
+//     }
+//   };
+//   adjustBackgroundPlayback();
 
   /* If Alice and the Red Queen are running at a speed of 1, the background doesn't move. */
-  /* But if they fall under 1, the background slides backwards */
-  setInterval(function () {
-    /* Set decay */
-    if (redQueen_alice.playbackRate > 0.4) {
-      redQueen_alice.playbackRate *= 0.9;
-    }
-    adjustBackgroundPlayback();
-  }, 3000);
+//   /* But if they fall under 1, the background slides backwards */
+//   setInterval(function () {
+//     /* Set decay */
+//     if (redQueen_alice.playbackRate > 0.4) {
+//       redQueen_alice.playbackRate *= 0.9;
+//     }
+//     adjustBackgroundPlayback();
+//   }, 3000);
 
-  const goFaster = function () {
-    /* But you can speed them up by giving the screen a click or a tap. */
-    redQueen_alice.playbackRate *= 1.1;
-    adjustBackgroundPlayback();
-  };
+//   const goFaster = function () {
+//     /* But you can speed them up by giving the screen a click or a tap. */
+//     redQueen_alice.playbackRate *= 1.1;
+//     adjustBackgroundPlayback();
+//   };
 
-  document.addEventListener("click", goFaster);
-  document.addEventListener("touchstart", goFaster);
+//   document.addEventListener("click", goFaster);
+//   document.addEventListener("touchstart", goFaster);
 
   return (
     <div>
@@ -137,11 +143,12 @@ const redQueen_alice_sprite = useWebAnimations({
               src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/641/sprite_running-alice-queen_small.png'
               srcset='https://s3-us-west-2.amazonaws.com/s.cdpn.io/641/sprite_running-alice-queen.png 2x'
               alt='Alice and the Red Queen running to stay in place.'
+              ref={redQueen_alice_sprite.ref}
             />
           </div>
         </div>
 
-        <div class='scenery' id='foreground1' ref={foreground1Movement}>
+        <div class='scenery' id='foreground1' ref={foreground1Movement.ref}>
           <img
             id='palm3'
             src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/641/palm3_small.png'
@@ -149,7 +156,7 @@ const redQueen_alice_sprite = useWebAnimations({
             alt=' '
           />
         </div>
-        <div class='scenery' id='foreground2' ref={foreground2Movement}>
+        <div class='scenery' id='foreground2' ref={foreground2Movement.ref}>
           <img
             id='bush'
             src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/641/bush_small.png'
@@ -163,7 +170,7 @@ const redQueen_alice_sprite = useWebAnimations({
             alt=' '
           />
         </div>
-        <div class='scenery' id='background1' ref={background1Movement}>
+        <div class='scenery' id='background1' ref={background1Movement.ref}>
           <img
             id='r_pawn_upright'
             src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/641/r_pawn_upright_small.png'
@@ -183,7 +190,7 @@ const redQueen_alice_sprite = useWebAnimations({
             alt=' '
           />
         </div>
-        <div class='scenery' id='background2' ref={background2Movement}>
+        <div class='scenery' id='background2' ref={background2Movement.ref}>
           <img
             id='r_pawn'
             src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/641/r_pawn_small.png'
